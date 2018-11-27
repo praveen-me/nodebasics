@@ -1,0 +1,56 @@
+- HTTP
+  - statless protocol, server doesnt need to store session info and each request is independent of other
+  - Client server model for hypertext transfer in web
+  - Anatomy of Request - Response
+    - Request - A command/request + optional header + optional body
+    - Response - A response + optional header + optional body
+    - If there is body in req/res, there has to be a header Content-Length or Transfer-Encoding
+    - Request 
+      - Start line is Mandatory and looks like -> Method + Relative Resource Path(No domain) + protocol version (e.g. GET /test.htm HTTP/1.1) 
+      - Each request has a response
+    - Response
+      - has STATUS code And Description
+      - 1 or more optional headers
+      - Optional body
+      - 1xx – Informational
+      - 2xx – Successful
+      - 3xx - Redirection
+      - 4xx– Client Error
+      - 5xx -Server Error
+
+What is NodeJS?
+* run time environment for js that runs on server
+* built on google V8 JS engine - same as chrome
+* Difference between browser and node
+* Node REPL
+* Environment vars, argvs
+* CommonJS module
+* Browser vs Node
+    * console.log(document, window, process)
+* V8 Engine
+    * Run time environment, Compiles JS to machine code
+* Why node - whats good about it?
+    * Speed
+        * Event driven, non-blocking I/O, async (single thread, event driven, callback fn)
+        * Being async helps it to handle thousands of concurrent connections in single thread w/o multithread concurrency
+    * Its JS - learn once write everywhere, fe, be
+    * Ecosystem - libraries
+* Blocking vs Non-blocking
+    * https://nodejs.org/en/docs/guides/blocking-vs-non-blocking/
+    * Blocking - Execution of a JS operation in the process must wait until a non-js operation completes.
+* Module exports, npm
+    * Package manager
+    * npm commands, init, install, devDependecy
+    * npm update, npm run tasks, local vs global, npm root -g
+* understanding package.json
+    * configuration file, like manifest
+    * versioning (semver) x.x.x (major, minor, patch)
+    * ~, ^, *, >, >=, <, <=
+* package-lock.json
+    * keep track of all the packages installed with their version
+    * npm list, npm outdated, npm uninstall
+
+
+- Kool aids
+  - console.time(), timeEnd()
+  - stdout and stderr

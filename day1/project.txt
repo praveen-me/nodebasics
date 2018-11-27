@@ -1,0 +1,20 @@
+1. Github Browser CLI
+  - Write a CLI that asks for a github username and then prints various stats in the commandline itself.
+  E.g.
+  > Githubrr
+  > Please enter a github username? prank7
+  > Wait . . .! I am fetching info from Github
+  > Name                                    ::   Prashant Abhishek
+    Followers                               ::   10
+    Public Repos                            ::   12
+    * You can add more stats here *
+
+
+
+==========
+Level up
+==========
+   - Ask for two github usernames and make a small github battle puting their stats side by side
+
+
+2. Make similar CLIs for Movies, Twitter, dictionary, lyrics etc.
