@@ -1,0 +1,4 @@
+- Parsing requests, finding headers, sending response
+- accessing body in post req
+- Express
+  - Realising the need for a framework
