@@ -51,8 +51,8 @@ const server = http.createServer((req, res) => {
         return readFileFromSystem('./contact.html', 'text/html', res);
       case '/assets/main.css':
         return readFileFromSystem('./assets/main.css', 'text/css', res);
+          const imageStrArr = req.url.split(".");
       case  String(req.url.match(/\/assets\/media\/.*/)):
-        const imageStrArr = req.url.split(".");
         const imageNameExt = imageStrArr[imageStrArr.length - 1];
         return readFileFromSystem(`.${req.url}`, findContentType(imageNameExt), res);
       default:
@@ -65,10 +65,11 @@ const server = http.createServer((req, res) => {
           console.log('post reqest')
           let body = '';
           req.on('data', chunk => {
-            body += chunk.toString();
+            body += chunk;
           })
 
           req.on('end', () => {
+            console.log(body);
             body = parse(body);
             console.log(body);
 
@@ -83,6 +84,7 @@ Message = ${body.message}
               if(err) throw err;
               console.log("File is written");
             })
+            res.statusCode = 200;
             res.end("Form Submitted");
           })
         }
