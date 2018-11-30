@@ -1,97 +1,17 @@
-// Render all pages dynamically via node server
+const express = require('express');
 
-// DONE - make a server
-// handle routes 
-    // - home
-        // - read ./index.html from fs and then send data via response object
-    // - about
-    // - projects
-    // - contact
-    // CSS
-    // Images
-        // svg
-        // jpeg
-        // png
+const app = express();
 
-const http = require('http');
-const fs = require('fs');
-const {parse} = require('querystring');
+app.use(express.static('./'))
 
-function readFileFromSystem(url, contentType, res) {
-    fs.readFile(url, (err, data) => {
-        if(err) throw err;
-        res.writeHeader(200, { 'Content-Type': contentType });
-        res.write(data);
-        res.end();
-    });
-}
+app.get('/', (req, res) => {
+  res.send('All files served.');
+})
 
-function findContentType(ext) {
-    switch(ext) {
-        case 'svg':
-            return 'image/svg+xml';
-        case 'png':
-            return 'image/png';
-        default:
-            return 'image/jpeg'
-    }
-}
+app.get('/contact', (req, res) => {
+  app.use(express.static('./contact'))
+})
 
-const server = http.createServer((req, res) => {
-    
-  if(req.method === 'GET') {
-    switch (req.url) {
-      case '/':
-        return readFileFromSystem('./index.html', 'text/html', res);
-      case '/about':
-        return readFileFromSystem('./about.html', 'text/html', res);
-      case '/projects':
-        return readFileFromSystem('./projects.html', 'text/html', res);
-      case '/contact':
-        return readFileFromSystem('./contact.html', 'text/html', res);
-      case '/assets/main.css':
-        return readFileFromSystem('./assets/main.css', 'text/css', res);
-          const imageStrArr = req.url.split(".");
-      case  String(req.url.match(/\/assets\/media\/.*/)):
-        const imageNameExt = imageStrArr[imageStrArr.length - 1];
-        return readFileFromSystem(`.${req.url}`, findContentType(imageNameExt), res);
-      default:
-        res.statusCode = 404;
-        return res.end('Not Found');
-      }
-    } else if(req.method === 'POST') {
-      switch(req.url) {
-        case "/contact" : {
-          console.log('post reqest')
-          let body = '';
-          req.on('data', chunk => {
-            body += chunk;
-          })
-
-          req.on('end', () => {
-            console.log(body);
-            body = parse(body);
-            console.log(body);
-
-            const userInfo = 
-            `
-Name = ${body.name}
-Email = ${body.email}
-Message = ${body.message}
-            `
-
-            fs.appendFile('user.txt', userInfo, err => {
-              if(err) throw err;
-              console.log("File is written");
-            })
-            res.statusCode = 200;
-            res.end("Form Submitted");
-          })
-        }
-      }
-    }
-});
-
-server.listen(8000, () => {
-    console.log('Server running at 8000');
-});
+app.listen(5000, () => {
+  console.log(`Server running at http://localhost:5000`);
+})
