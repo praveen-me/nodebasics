@@ -1,34 +1,84 @@
+//Importing packages
 const express = require('express');
-const fs = require('fs');
 const app = express();
-const path = require('path')
+const path = require('path');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const fs = require('fs');
 
-//add static files
-app.use(express.static('/public'));
-app.use(bodyParser.json())
+//connect moongoose
+mongoose.connect('mongodb://localhost/todos', (err, connection) => {
+  if(err) throw err;
+  console.log("Connection Sucessful")
+});
 
-// Apply Middleware
+const todoSchema = new mongoose.Schema({
+  todo : String
+})
+
+const Todo = mongoose.model('Todo', todoSchema);
+
+//Setting view engine
+app.set('views', './views')
+app.set('view engine', 'pug')
+
+//Setting middleware
+app.use(bodyParser.json()); // for parsing application/json
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+
+app.use(express.static('/public'))
+
+// Apply middleware for craeting log
 app.use((req, res, next) => {
-  const data = `REQUEST - ${req.method} - ${req.url} - ${new Date()} \n`
-  fs.appendFile('error.log', data, (err, log) => {
+  let logString = `METHOD => ${req.method} - PATH => ${req.url} ${new Date()}`;
+  fs.appendFile('error.log', logString, (err, logSuccess) => {
     if(err) throw err;
     next();
   })
 })
 
-// Set views and vies engine
-app.set('views', './views')
-app.set('view engine', 'pug')
+//Handling Routes
+app.get('/',(req, res) => {
 
-app.route('/')
-  .get((req, res) => {
-    res.render('index', { title: 'Hey', message: 'Hello there!' })
-  }).post((req, res) => {
-    console.log(req.body);
-    res.send(req.body)
+  Todo.find({}, (err, data) => {
+    console.log(data);   
+    // res.render('index', {todos : data});
+    res.render('list', {todos : data});
   })
 
+})
+
+app.get('/todos/new', (req, res) => {
+  res.render('add-form');
+})
+
+app.post('/todos/new', (req, res) => {
+  const item = req.body;
+  const newTodo = new Todo({
+    ...item
+  });
+  newTodo.save((err, saveData) => {
+    if(err) throw err;
+    console.log('data saved');
+    res.redirect("/");
+  });
+})
+
+// app.post('/',(req, res) => {
+//   let item = req.body;
+//   item.done = false;name
+//   console.log(item);  
+
+//   let newTodo = new Todo(item);
+
+//   newTodo.save((err, savedData) => {
+//     console.log("submitted")
+//   })
+//   Todo.find({}, (err, data) => {
+//     console.log(data);   
+// res  })
+// })
+
 app.listen(8080, () => {
-  console.log(`Server is running on http://localhost:8080`);
+  console.log(`Port running on http://localhost:8080`)
 })

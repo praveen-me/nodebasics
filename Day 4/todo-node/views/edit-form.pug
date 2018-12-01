@@ -1,0 +1,10 @@
+html
+  head
+    title= "Add Todo"
+  body
+    form(action="/todos/new", method="POST")
+      input(type="text", name="todo")
+      |
+      input(type="submit", value="Add Todo")
+
+      

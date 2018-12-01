@@ -1,0 +1,17 @@
+html
+  head
+    title= "Todos"
+  body
+    a(href="/todos/new") New Todo
+
+    if todos.length > 0
+       ul
+        each val in todos
+          li
+            h3= val.todo
+            |
+            a(href="todos/:id/edit") Edit
+            |
+            a(href="todos/:id/") Delete
+    else 
+      h2= "No todos"

@@ -1,12 +1,13 @@
 html
-  head
+  head  
     title= "Todo"
-    | 
-    <style src="./../public/stylesheets/style.css">
-    </style>
+    link
   body
     form(action="/", method="POST")
-      input(type="text", name="todo")
+      input(type="text", name="name")
       |
-      input(type="submit", value="Add todo")
-    
+      input(type="submit", value="Add Todo")
+    div
+      ul
+        each val in todos
+          li= val.name
