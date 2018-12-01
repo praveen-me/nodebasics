@@ -19,6 +19,7 @@ input[type="text"] {
   margin: 0.5rem 0;
   font-size: 1.2rem;
   padding: 0.3rem 1rem;
+  font-family: 'Roboto Condensed', sans-serif;
 }
 
 .link {
@@ -54,9 +55,9 @@ h3, h2, h1 {
   margin: 0;
 }
 
-h2 {
+h2{
   font-size: 2rem;
-  margin: 1.5rem 0;
+  margin: 1rem 0;
 }
 
 .list {
@@ -84,6 +85,11 @@ li {
 .item a{
   display: inline-block;
   font-size: 2rem;
+  transition: 0.3s all ease-in-out;
+}
+
+.item a:hover {
+  color: #01443d
 }
 
 .item-links a{

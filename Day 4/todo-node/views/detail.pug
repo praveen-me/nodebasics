@@ -1,6 +1,10 @@
 html
   head
     title= todo[0].todo
+    |
+    link(rel="stylesheet", href="/style.css", type="text/css")
   body
-    h1= todo[0].todo
-    h2= todo[0].description
+    div(class="container")
+      h1 Task Details
+        h2= todo[0].todo
+        h3= todo[0].description
