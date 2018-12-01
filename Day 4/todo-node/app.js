@@ -13,7 +13,8 @@ mongoose.connect('mongodb://localhost/todos', (err, connection) => {
 });
 
 const todoSchema = new mongoose.Schema({
-  todo : String
+  todo : String,
+  description : String
 })
 
 const Todo = mongoose.model('Todo', todoSchema);
@@ -41,7 +42,6 @@ app.use((req, res, next) => {
 app.get('/',(req, res) => {
 
   Todo.find({}, (err, data) => {
-    console.log(data);   
     // res.render('index', {todos : data});
     res.render('list', {todos : data});
   })
@@ -59,25 +59,44 @@ app.post('/todos/new', (req, res) => {
   });
   newTodo.save((err, saveData) => {
     if(err) throw err;
-    console.log('data saved');
     res.redirect("/");
   });
 })
 
-// app.post('/',(req, res) => {
-//   let item = req.body;
-//   item.done = false;name
-//   console.log(item);  
+app.get('/todos/:id/edit', (req, res) => {
+  const id = req.params.id
+  Todo.find({_id : id}, (err, data) => {
+    res.render('edit-form', {todo : data});
+  }) 
+});
 
-//   let newTodo = new Todo(item);
+app.get('/todos/:id', (req, res) => {
+  const id = req.params.id
+  Todo.find({_id : id}, (err, data) => {
+    res.render('detail', {todo : data});
+  })
+})
 
-//   newTodo.save((err, savedData) => {
-//     console.log("submitted")
-//   })
-//   Todo.find({}, (err, data) => {
-//     console.log(data);   
-// res  })
-// })
+app.post('/todos/:id/update', (req, res) => {
+  let id = req.params.id;
+  let data = req.body;
+  console.log(data)
+
+  Todo.update({_id : id}, {$set : {...data}}, (err, data) => {
+    res.redirect('/')
+  })
+
+})
+
+app.get('/delete/:id', (req, res) => {
+  console.log("deleted")
+  const id = req.params.id
+  console.log(id)
+  Todo.remove({_id : id}, (err, data) => {
+    res.redirect('/')
+  })
+})
+
 
 app.listen(8080, () => {
   console.log(`Port running on http://localhost:8080`)

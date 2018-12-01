@@ -1,17 +1,40 @@
 html
   head
     title= "Todos"
+    link(rel="stylesheet", href="./../public/stylesheets/style.css")
+    style.
+      .link {
+        text-decoration: none;
+        color: #fff;
+        font-weight: 300;
+      }
+
+      .btn {
+        border-radius : 10px;
+        border-radius: 3px;
+        border: none;
+        font-size: 1.5rem;
+        background-color: #009688;
+        color: #fff;
+        font-weight: 300;
+      }
+
+
+
   body
-    a(href="/todos/new") New Todo
+    button(class="btn")
+      a(href="/todos/new", class="link") New Todo
 
     if todos.length > 0
        ul
         each val in todos
           li
-            h3= val.todo
+            - var id = val._id
+            h3
+              a(href='todos/'+id)= val.todo
             |
-            a(href="todos/:id/edit") Edit
+            a(href='todos/'+id+'/edit') Edit
             |
-            a(href="todos/:id/") Delete
+            a(href="/delete/"+id) Delete
     else 
       h2= "No todos"

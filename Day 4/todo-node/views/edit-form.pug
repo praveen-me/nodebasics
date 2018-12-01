@@ -1,10 +1,17 @@
 html
   head
-    title= "Add Todo"
+    title= "Update Todo"
   body
-    form(action="/todos/new", method="POST")
+    //- - var todo = todo[0].todo
+    //- - var description = todo[0].description
+    h2= "Previous Task Name - "+todo[0].todo
+    h3= "Previous Task Description - "+todo[0].description
+    |
+    - var id = todo[0]._id
+    form(action="/todos/" + id +'/update', method="POST")
       input(type="text", name="todo")
+      |
+      input(type="text", name="description")
       |
       input(type="submit", value="Add Todo")
 
-      
