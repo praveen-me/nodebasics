@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:300i,400,400i,700');
+
+
+body {
+  padding: 0;
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+a {
+  color: #000;
+  font-family: 'Roboto Condensed', sans-serif;
+  font-weight: 300;
+  text-decoration: none;
+}
+
+input[type="text"] {
+  border-radius:  3px; 
+  border: 2px solid rgb(73, 73, 73);
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+  padding: 0.3rem 1rem;
+}
+
+.link {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 300;
+}
+
+.btn {
+  border-radius : 10px;
+  border-radius: 3px;
+  border: none;
+  font-size: 1.5rem;
+  background-color: #009688;
+  color: #fff;
+  font-weight: 300;
+  transition:  all 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #01443d;
+  cursor: pointer;
+}
+
+.container {
+  width: 40%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+
+h3, h2, h1 {
+  margin: 0;
+}
+
+h2 {
+  font-size: 2rem;
+  margin: 1.5rem 0;
+}
+
+.list {
+  list-style: none; 
+  text-align: center;
+  padding: 0;
+}
+
+li {
+  border:  2px solid #ddd;
+  margin: 0.5rem 0;
+  padding: 0.5rem 0.5rem;
+  border-radius: 3px;
+  text-align: left;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  place-items: center;
+}
+
+.item {
+  display: inline-block;
+  place-self : start;
+}
+
+.item a{
+  display: inline-block;
+  font-size: 2rem;
+}
+
+.item-links a{
+  display: inline-block;
+  padding: 0.3rem 1rem;
+  margin: 0 0.5rem;
+  border-radius: 3px;
+  color: #fff;
+}
+
+.item-links a:nth-child(1) {
+  background: rgb(2, 27, 109);
+}
+
+.item-links a:nth-child(1):hover {
+  background: rgb(3, 47, 190);
+}
+
+.item-links a:nth-child(2) {
+  background: rgb(75, 1, 1);
+}
+
+.item-links a:nth-child(2):hover {
+  background: rgb(138, 0, 0);
+}
+
+li a {
+  font-size: 1.2rem;
+}
+
+/* Form */
+.todo-form {
+  display: grid;
+  grid-template-columns: 1fr;
+}

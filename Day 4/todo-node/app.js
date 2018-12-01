@@ -27,7 +27,7 @@ app.set('view engine', 'pug')
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
-app.use(express.static('/public'))
+app.use(express.static(path.join(__dirname,'public')))
 
 // Apply middleware for craeting log
 app.use((req, res, next) => {

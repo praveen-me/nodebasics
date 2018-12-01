@@ -1,40 +1,26 @@
 html
   head
     title= "Todos"
-    link(rel="stylesheet", href="./../public/stylesheets/style.css")
-    style.
-      .link {
-        text-decoration: none;
-        color: #fff;
-        font-weight: 300;
-      }
-
-      .btn {
-        border-radius : 10px;
-        border-radius: 3px;
-        border: none;
-        font-size: 1.5rem;
-        background-color: #009688;
-        color: #fff;
-        font-weight: 300;
-      }
-
-
+    |
+    link(rel="stylesheet", href="./style.css", type="text/css")
 
   body
-    button(class="btn")
-      a(href="/todos/new", class="link") New Todo
+    div(class="container")
+      button(class="btn")
+        a(href="/todos/new", class="link") New Todo
 
-    if todos.length > 0
-       ul
-        each val in todos
-          li
-            - var id = val._id
-            h3
-              a(href='todos/'+id)= val.todo
-            |
-            a(href='todos/'+id+'/edit') Edit
-            |
-            a(href="/delete/"+id) Delete
-    else 
-      h2= "No todos"
+      if todos.length > 0
+        h2 Todos
+        ul(class="list")
+          each val in todos
+            li(class="list-item")
+              - var id = val._id
+              h3(class="item")
+                a(href='todos/'+id, class="item-link")= val.todo
+              |
+              div(class="item-links")
+                a(href='todos/'+id+'/edit', class="item-link") Edit
+                |
+                a(href="/delete/"+id, class="item-link") Delete
+      else 
+        h2= "No todos"
