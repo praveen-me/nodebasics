@@ -5,7 +5,6 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const fs = require('fs');
-const methodOverride = require('method-override');
 
 //connect moongoose
 mongoose.connect('mongodb://localhost/todos', (err, connection) => {
@@ -30,14 +29,24 @@ app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x
 
 app.use(express.static(path.join(__dirname,'public')));
 
-app.use(methodOverride(function (req, res) {
-  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
-    // look in urlencoded POST bodies and delete it
-    var method = req.body._method
-    delete req.body._method
-    return method
+// Method Overriding
+app.use((req, res, next) => {
+  switch(req.body._method) {
+    case "DELETE" : {
+      req.method = 'DELETE';
+      // req.url = req.path;
+      next();
+      break;
+    }
+    case "PUT" : {
+      req.method = 'PUT';
+      // req.url = req.path;
+      next();
+      break;
+    }
+    default : next()
   }
-}))
+})
 
 // Apply middleware for craeting log
 app.use((req, res, next) => {
