@@ -11,6 +11,9 @@ html
       |
       - var id = todo[0]._id
       form(action="/todos/" + id +'/update', method="POST", class="todo-form")
+        |
+        input(type="hidden", name="_method", value="PUT")
+        |
         input(type="text", name="todo", placeholder="Add Todo")
         |
         input(type="text", name="description", placeholder="Add Description")

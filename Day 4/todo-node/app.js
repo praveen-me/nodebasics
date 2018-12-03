@@ -5,6 +5,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const fs = require('fs');
+const methodOverride = require('method-override');
 
 //connect moongoose
 mongoose.connect('mongodb://localhost/todos', (err, connection) => {
@@ -27,7 +28,16 @@ app.set('view engine', 'pug')
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
-app.use(express.static(path.join(__dirname,'public')))
+app.use(express.static(path.join(__dirname,'public')));
+
+app.use(methodOverride(function (req, res) {
+  if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+    // look in urlencoded POST bodies and delete it
+    var method = req.body._method
+    delete req.body._method
+    return method
+  }
+}))
 
 // Apply middleware for craeting log
 app.use((req, res, next) => {
@@ -77,7 +87,7 @@ app.get('/todos/:id', (req, res) => {
   })
 })
 
-app.post('/todos/:id/update', (req, res) => {
+app.put('/todos/:id/update', (req, res) => {
   let id = req.params.id;
   let data = req.body;
   console.log(data)
@@ -88,11 +98,11 @@ app.post('/todos/:id/update', (req, res) => {
 
 })
 
-app.get('/delete/:id', (req, res) => {
-  console.log("deleted")
+app.delete('/todos/:id/delete', (req, res) => {
+  console.log(req.method)
   const id = req.params.id
   console.log(id)
-  Todo.remove({_id : id}, (err, data) => {
+  Todo.deleteOne({_id : id}, (err, data) => {
     res.redirect('/')
   })
 })

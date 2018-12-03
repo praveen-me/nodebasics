@@ -21,6 +21,9 @@ html
               div(class="item-links")
                 a(href='todos/'+id+'/edit', class="item-link") Edit
                 |
-                a(href="/delete/"+id, class="item-link") Delete
+                form(action="/todos/"+id+"/delete", method="POST")
+                  input(type="hidden", name="_method",  value="DELETE")
+                  | 
+                  input(type="submit", value="Delete", class="btn")
       else 
         h2= "No todos"
