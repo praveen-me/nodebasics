@@ -4,10 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon -r esm app.js"
+    "start": "nodemon -r esm --inspect  app.js"
   },
   "dependencies": {
     "apollo-server-express": "^2.9.7",
+    "dateformat": "^3.0.3",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "graphql": "^14.5.8",

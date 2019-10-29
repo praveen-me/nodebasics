@@ -1,6 +1,10 @@
 import gql from "graphql-tag";
 
 const typeDefs = gql`
+  directive @date(defaultFormat: String = "mmmm dd, yyyy") on FIELD_DEFINITION
+
+  scalar Date
+
   type Author {
     id: ID! # the ! means that every author object _must_ have an id
     firstName: String
@@ -21,6 +25,7 @@ const typeDefs = gql`
   # the schema allows the following query:
   type Query {
     posts: [Post]
+    today: Date @date
   }
 
   # this schema allows the following mutation:

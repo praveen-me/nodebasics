@@ -2,6 +2,9 @@ const resolvers = {
   Query: {
     posts() {
       return posts;
+    },
+    today() {
+      return new Date();
     }
   },
   Mutation: {
