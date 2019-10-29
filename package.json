@@ -1,0 +1,9 @@
+{
+  "name": "nodebasics",
+  "version": "1.0.0",
+  "description": "A sample repo contains experiments related to node and server relate stuff.",
+  "main": "index.js",
+  "repository": "git@github.com:praveen-me/nodebasics.git",
+  "author": "praveen-me <praveenkrsaini0@gmail.com>",
+  "license": "MIT"
+}
