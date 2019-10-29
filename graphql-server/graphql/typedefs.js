@@ -3,16 +3,16 @@ import gql from "graphql-tag";
 const typeDefs = gql`
   directive @date(defaultFormat: String = "mmmm dd, yyyy") on FIELD_DEFINITION
 
+  directive @auth on OBJECT | FIELD_DEFINITION
+
+  directive @uniqueId(name: String = "uid", from: [String] = ["id"]) on OBJECT
+
   scalar Date
 
-  type Author {
+  type Author @auth @uniqueId(from: ["firstName", "id", "lastName"]) {
     id: ID! # the ! means that every author object _must_ have an id
     firstName: String
     lastName: String
-    """
-    the list of Posts by this author
-    """
-    posts: [Post]
   }
 
   type Post {
@@ -26,6 +26,7 @@ const typeDefs = gql`
   type Query {
     posts: [Post]
     today: Date @date
+    me: Author
   }
 
   # this schema allows the following mutation:

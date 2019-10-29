@@ -5,6 +5,13 @@ const resolvers = {
     },
     today() {
       return new Date();
+    },
+    me() {
+      return {
+        id: "bgf",
+        firstName: "Apple",
+        lastName: "Banana"
+      };
     }
   },
   Mutation: {
@@ -18,9 +25,9 @@ const resolvers = {
     }
   },
   Author: {
-    posts(author) {
-      return filter(posts, { authorId: author.id });
-    }
+    // posts(author) {
+    //   return filter(posts, { authorId: author.id });
+    // }
   },
   Post: {
     author(post) {

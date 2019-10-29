@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "apollo-server-express": "^2.9.7",
+    "crypto": "^1.0.1",
     "dateformat": "^3.0.3",
     "esm": "^3.2.25",
     "express": "^4.17.1",
