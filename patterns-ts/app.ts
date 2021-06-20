@@ -42,6 +42,8 @@ interface Database<T extends BaseRecord> {
     set(newValue: T): void
     onBeforeSet(listener: Listener<BeforeSetEvent<T>>): () => void 
     onAfterSet(listener: Listener<AfterSetEvent<T>>): void
+    visit(visitor: (item: T) => void): void
+    selectBest(scoreStratergy: (item: T) => number): T | undefined
 }
 
 // 1 - Factory Pattern
@@ -78,8 +80,28 @@ function createDatabase<T extends BaseRecord>() {
            return this.beforeObserver.subscribe(listener) 
         }
 
-        onAfterSet(listener: Listener<AfterSetEvent<T>>) {
+        public onAfterSet(listener: Listener<AfterSetEvent<T>>) {
             return this.afterObserver.subscribe(listener)
+        }
+
+        // Visitor pattern
+        public visit(visitor: (item: T) => void): void {
+            Object.values(this.db).forEach(visitor)
+        }
+
+        // Stratergy
+        public selectBest(scoreStratergy: (item: T) => number): T | undefined {
+            let maxScore = 0;
+            let bestItem;
+
+            Object.values(this.db).forEach((item) => {
+                if(maxScore < scoreStratergy(item)) {
+                    maxScore = scoreStratergy(item);
+                    bestItem = item
+                }
+            })
+
+            return bestItem
         }
     }
 
@@ -97,8 +119,20 @@ PokemonDB.instance.set({
     defense: 45
 })
 
+unSubscribeAfterSet()
+
 PokemonDB.instance.set({
     key: 'Banana',
     attack: 80,
     defense: 100
 })
+
+PokemonDB.instance.visit((pokemon) => {
+    console.log({pokemon})
+})
+
+const bestDefensivePokemon = PokemonDB.instance.selectBest((pokemon) => {
+    return pokemon.defense
+})
+
+console.log({bestDefensivePokemon})
