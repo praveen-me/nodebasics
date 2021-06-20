@@ -1,4 +1,3 @@
-
 interface Pokemon {
     key: number | string;
     attack: number;
@@ -14,30 +13,41 @@ interface Database<T extends BaseRecord> {
     set(newValue: T): void
 }
 
-class InMemoryDatabase<T extends BaseRecord> implements Database<T> {
-    private db: Record<string, T> = {}
-
-    public set(newValue: T): void {
-        this.db[newValue.key] = newValue 
+// 1 - Factory Pattern
+function createDatabase<T extends BaseRecord>() {
+    // Singleton 
+    return class InMemoryDatabase implements Database<T> {
+        private db: Record<string, T> = {}
+    
+        static instance = new InMemoryDatabase()
+    
+        private constructor(){}
+    
+        public set(newValue: T): void {
+            this.db[newValue.key] = newValue 
+        }
+    
+        public get(key: string): T {
+            return this.db[key]
+        }
     }
 
-    public get(key: string): T {
-        return this.db[key]
-    }
 }
 
-const pokemonDB = new InMemoryDatabase<Pokemon>()
+const pokemonDB = createDatabase<Pokemon>()
 
-pokemonDB.set({
+const secondPokemon = pokemonDB
+
+pokemonDB.instance.set({
     key: 'Apple',
     attack: 100,
     defense: 45
 })
 
-pokemonDB.set({
+pokemonDB.instance.set({
     key: 'Banana',
     attack: 80,
     defense: 100
 })
 
-console.log(pokemonDB.get('Apple'))
+console.log(pokemonDB.instance.get('Apple'))
