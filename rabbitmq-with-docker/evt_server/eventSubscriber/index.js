@@ -1,7 +1,8 @@
 const amqp = require("amqplib/callback_api");
-const eventTypes = require("./eventTypes");
+const eventHandler = require("./eventHandler");
+// const eventTypes = require("./eventTypes");
 
-class QueuePublisher {
+class QueueSubscriber {
   constructor(queue) {
     this.queue = queue;
     this.queueChannel = null;
@@ -28,27 +29,31 @@ class QueuePublisher {
 
   async setChannel() {
     try {
-      const channel = await QueuePublisher.setup();
+      const channel = await QueueSubscriber.setup();
 
       this.queueChannel = channel;
 
       this.queueChannel.assertQueue(this.queue, {
         durable: false,
       });
+
+      this.queueChannel.consume(
+        this.queue,
+        function (msg) {
+          const event = JSON.parse(msg.content.toString());
+
+          if (event.type) {
+            eventHandler[event.type](event.payload);
+          }
+        },
+        {
+          noAck: true,
+        }
+      );
     } catch (e) {
       throw new Error(e);
     }
   }
-
-  sendEvent(msg) {
-    if (this.queueChannel) {
-      this.queueChannel.sendToQueue(
-        this.queue,
-        Buffer.from(JSON.stringify(msg))
-      );
-      console.log(" [x] Sent %s", JSON.stringify(msg, null, 2));
-    }
-  }
 }
 
-module.exports = { QueuePublisher, eventTypes };
+module.exports = { QueueSubscriber };

@@ -16,8 +16,6 @@ app.get("/", (req, res) => {
 
 app.post("/product", (req, res) => {
   const { body } = req;
-  console.log({ body });
-
   // send product event to the evt services
   eventQueue.sendEvent({
     type: eventTypes.PRODUCT_CREATED,
