@@ -8,8 +8,8 @@ COPY server/ .
 
 RUN ls
 
-RUN apt-get update && apt-get install netcat-openbsd -y 
+RUN apt-get update && apt-get install netcat-openbsd -y
 
-RUN npm install --only-production
+RUN yarn install --production
 
 CMD [ "npm", "start" ]
