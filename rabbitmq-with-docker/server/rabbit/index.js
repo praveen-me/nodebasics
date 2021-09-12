@@ -11,13 +11,13 @@ class QueuePublisher {
 
   static setup() {
     return new Promise((resolve, reject) => {
-      amqp.connect("amqp://localhost", function (connectError, connection) {
+      amqp.connect("amqp://rabbitmq:5672", function (connectError, connection) {
         if (connectError) {
-          reject(connectError);
+          return reject(connectError);
         }
         connection.createChannel(function (channelError, channel) {
           if (channelError) {
-            reject(channelError);
+            return reject(channelError);
           }
 
           resolve(channel);
