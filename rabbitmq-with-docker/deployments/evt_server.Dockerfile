@@ -2,14 +2,16 @@ FROM node:14
 
 WORKDIR /app
 
-COPY evt_server/package.json .
+RUN apt-get update && apt-get install netcat-openbsd -y
 
-COPY evt_server/ .
+ADD common/package.json ./common/package.json
 
-RUN ls
+ADD common/ ./common
 
-RUN apt-get update && apt-get install netcat-openbsd -y 
+RUN cd common && yarn install --production
+
+ADD evt_server/package.json ./server/package.json
+
+ADD evt_server/ ./server
 
 RUN yarn install --production
-
-CMD [ "npm", "start" ]

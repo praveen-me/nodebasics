@@ -1,6 +1,8 @@
 const amqp = require("amqplib/callback_api");
 
-const AMQ_RABBIT_URL = process.env.AMQ_RABBIT_URL;
+const AMQ_RABBIT_URL = process.env.AMQP_RABBIT_URL;
+
+console.log({ AMQ_RABBIT_URL });
 
 class RabbitQueue {
   constructor(queue, isConsumer = false, consumerEvtHandler = null) {
