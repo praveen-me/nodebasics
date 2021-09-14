@@ -22,6 +22,8 @@ services:
     ports:
       - "5001:5001"
     restart: on-failure
+    environment:
+      - AMQP_RABBIT_URL="amqp://rabbitmq:5672"
     depends_on:
       - rabbitmq
     links:
@@ -34,7 +36,7 @@ services:
           sleep 1;
         done;
         echo Connected!;
-        npm start
+        cd server && npm start
       "
 
   evt_server:
@@ -49,6 +51,8 @@ services:
       - rabbitmq
     links:
       - rabbitmq
+    environment:
+      - AMQP_RABBIT_URL="amqp://rabbitmq:5672"
     command: >
       /bin/sh -c "
         echo Waiting for rabbitmq service start...;
@@ -57,5 +61,5 @@ services:
           sleep 1;
         done;
         echo Connected!;
-        npm start
+        cd server && npm start
       "
