@@ -1,11 +1,13 @@
-const express = require("express");
-var bodyParser = require("body-parser");
+require("dotenv").config();
 
-const { QueuePublisher, eventTypes } = require("./rabbit");
+const express = require("express");
+const bodyParser = require("body-parser");
+
+const { RabbitQueue, eventTypes } = require("../common/rabbit");
 
 const app = express();
 const PORT = process.env.PORT || 5001;
-const eventQueue = new QueuePublisher("products");
+const eventQueue = new RabbitQueue("products");
 app.use(bodyParser.json());
 
 app.get("/", (req, res) => {

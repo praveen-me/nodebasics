@@ -1,5 +1,5 @@
 const eventHandler = {
-  productCreated: require("./handlers/productCreated"),
+  productCreated: require("./productCreated"),
 };
 
 module.exports = eventHandler;
